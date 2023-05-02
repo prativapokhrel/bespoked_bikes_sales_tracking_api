@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  manufacturer: MyString
+  style: MyString
+  purchase_price: 1.5
+  sale_price: 1.5
+  qty_on_hand: 1
+  commission_percentage: 1.5
+
+two:
+  name: MyString
+  manufacturer: MyString
+  style: MyString
+  purchase_price: 1.5
+  sale_price: 1.5
+  qty_on_hand: 1
+  commission_percentage: 1.5
