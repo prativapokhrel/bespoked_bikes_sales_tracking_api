@@ -2,6 +2,7 @@ class V1::SalespeopleController < ApplicationController
 
     def index
         @salespeople = Salesperson.all 
+
         render json: @salespeople, status: :ok 
       end 
     
