@@ -36,6 +36,9 @@ RSpec.describe Salesperson, type: :model do
     it 'is not valid with a duplicate phone' do
       existing_person = FactoryBot.create(:salesperson)
       person.phone = existing_person.phone
+      person.first_name = existing_person.first_name
+      person.last_name = existing_person.last_name
+
       expect(person).to_not be_valid
       expect(person.errors.full_messages).to include("Phone has already been taken")
     end
