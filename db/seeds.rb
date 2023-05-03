@@ -74,15 +74,24 @@ I18n.reload!
 
 # Customer.destroy_all
 
-10.times do |index|
-    Sale.create!(
-      product_id: Product.all.map(&:id).sample,
-      salesperson_id: Salesperson.all.map(&:id).sample,
-      customer_id: Customer.all.map(&:id).sample,
-      sales_date: Faker::Date.backward(days: 365)
-    )
-  end
+# 10.times do |index|
+#     Sale.create!(
+#       product_id: Product.all.map(&:id).sample,
+#       salesperson_id: Salesperson.all.map(&:id).sample,
+#       customer_id: Customer.all.map(&:id).sample,
+#       sales_date: Faker::Date.backward(days: 365)
+#     )
+#   end
 
-  
-p "Created #{Sale.count} sales"
+5.times do |index|
+    Discount.create!(
+        product_id: Product.all.map(&:id).sample, 
+        begin_date: Faker::Date.between(from: 2.days.ago, to: Date.today), 
+        end_date:  Faker::Date.between(from: 5.days.from_now, to: 20.days.from_now), 
+        discount_percentage: rand(5..10)
+    )
+
+end 
+
+p "Created #{Discount.count} discountz"
 
