@@ -33,4 +33,12 @@ FactoryBot.define do
         address { Faker::Address.full_address }
         start_date { Faker::Date.backward(days: 365) }
     end
+
+    factory :sale do
+        association :product
+        association :salesperson
+        association :customer
+        
+        sales_date { Faker::Date.backward(days: 365) }
+    end
   end
