@@ -10,7 +10,7 @@ class AddNotNullConstraintsToColumns < ActiveRecord::Migration[6.1]
     change_column_null :salespeople, :first_name, false
     change_column_null :salespeople, :last_name, false
     change_column_null :salespeople, :phone, false
-    change_column_null :salespeople, :termination_date, false
+    change_column_null :salespeople, :start_date, false
 
     change_column_null :customers, :first_name, false
     change_column_null :customers, :last_name, false

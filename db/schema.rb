@@ -73,8 +73,8 @@ ActiveRecord::Schema.define(version: 2023_05_03_170410) do
     t.string "last_name", null: false
     t.string "address"
     t.string "phone", null: false
-    t.date "start_date"
-    t.date "termination_date", null: false
+    t.date "start_date", null: false
+    t.date "termination_date"
     t.bigint "manager_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
