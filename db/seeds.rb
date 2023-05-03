@@ -9,65 +9,89 @@
 require 'faker'
 I18n.reload!
 
-Product.destroy_all
+# Product.destroy_all
 
-10.times do |index|
-    Product.create!(
-      name: Faker::Vehicle.make_and_model,
-      manufacturer: Faker::Vehicle.manufacture,
-      style: ['Road Bike', 'Mountain Bike', 'City Bike'].sample,
-      purchase_price: rand(500..1000),
-      sale_price: rand(1000..2000),
-      qty_on_hand: rand(0..10),
-      commission_percentage: rand(5..10)
-    )
-  end
+# 10.times do |index|
+#     Product.create!(
+#       name: Faker::Vehicle.make_and_model,
+#       manufacturer: Faker::Vehicle.manufacture,
+#       style: ['Road Bike', 'Mountain Bike', 'City Bike'].sample,
+#       purchase_price: rand(500..1000),
+#       sale_price: rand(1000..2000),
+#       qty_on_hand: rand(0..10),
+#       commission_percentage: rand(5..10)
+#     )
+#   end
   
 
-p "Created #{Product.count} products"
+# p "Created #{Product.count} products"
 
 
-# Manager.destroy_all
+# # Manager.destroy_all
 
-2.times do |index|
-    Manager.create!(
-      first_name: Faker::Name.first_name,
-      last_name: Faker::Name.last_name,
-      email: Faker::Internet.email
-    )
-  end
+# 2.times do |index|
+#     Manager.create!(
+#       first_name: Faker::Name.first_name,
+#       last_name: Faker::Name.last_name,
+#       email: Faker::Internet.email
+#     )
+#   end
   
 
-p "Created #{Manager.count} managers"
+# p "Created #{Manager.count} managers"
 
 
-Salesperson.destroy_all
+# Salesperson.destroy_all
+
+# 5.times do |index|
+#     Salesperson.create!(
+#       first_name: Faker::Name.first_name,
+#       last_name: Faker::Name.last_name,
+#       phone: Faker::PhoneNumber.cell_phone,
+#       address: Faker::Address.full_address,
+#       start_date: Faker::Date.backward(days: 365),
+#       termination_date: Faker::Date.forward(days: 365),
+#       manager_id: [Manager.first.id, Manager.last.id].sample
+#     )
+#   end
+  
+# p "Created #{Salesperson.count} salespeople"
+
+
+# Customer.destroy_all
+
+# 5.times do |index|
+#     Customer.create!(
+#       first_name: Faker::Name.first_name,
+#       last_name: Faker::Name.last_name,
+#       phone: Faker::PhoneNumber.cell_phone,
+#       address: Faker::Address.full_address,
+#       start_date: Faker::Date.backward(days: 365)
+#     )
+#   end
+  
+# p "Created #{Customer.count} customers"
+
+# Customer.destroy_all
+
+# 10.times do |index|
+#     Sale.create!(
+#       product_id: Product.all.map(&:id).sample,
+#       salesperson_id: Salesperson.all.map(&:id).sample,
+#       customer_id: Customer.all.map(&:id).sample,
+#       sales_date: Faker::Date.backward(days: 365)
+#     )
+#   end
 
 5.times do |index|
-    Salesperson.create!(
-      first_name: Faker::Name.first_name,
-      last_name: Faker::Name.last_name,
-      phone: Faker::PhoneNumber.cell_phone,
-      address: Faker::Address.full_address,
-      start_date: Faker::Date.backward(days: 365),
-      termination_date: Faker::Date.forward(days: 365),
-      manager_id: [Manager.first.id, Manager.last.id].sample
+    Discount.create!(
+        product_id: Product.all.map(&:id).sample, 
+        begin_date: Faker::Date.between(from: 2.days.ago, to: Date.today), 
+        end_date:  Faker::Date.between(from: 5.days.from_now, to: 20.days.from_now), 
+        discount_percentage: rand(5..10)
     )
-  end
-  
-p "Created #{Salesperson.count} salespeople"
 
+end 
 
-Customer.destroy_all
+p "Created #{Discount.count} discountz"
 
-5.times do |index|
-    Customer.create!(
-      first_name: Faker::Name.first_name,
-      last_name: Faker::Name.last_name,
-      phone: Faker::PhoneNumber.cell_phone,
-      address: Faker::Address.full_address,
-      start_date: Faker::Date.backward(days: 365)
-    )
-  end
-  
-p "Created #{Customer.count} customers"
