@@ -1,5 +1,4 @@
 class V1::SalesController < ApplicationController
-    Product, Salesperson, Customer, Sales Date
 
     def index 
         @sales = Sale.all 
