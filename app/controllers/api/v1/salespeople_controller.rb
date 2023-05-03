@@ -1,4 +1,4 @@
-class V1::SalespeopleController < ApplicationController
+class Api::V1::SalespeopleController < ApplicationController
 
     def index
         @salespeople = Salesperson.all 

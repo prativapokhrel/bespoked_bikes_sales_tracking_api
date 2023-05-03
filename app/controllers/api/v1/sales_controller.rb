@@ -1,4 +1,4 @@
-class V1::SalesController < ApplicationController
+class Api::V1::SalesController < ApplicationController
 
     def index 
         if params[:from_date] && params[:to_date]
