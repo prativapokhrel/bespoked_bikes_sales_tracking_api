@@ -10,17 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_05_03_055227) do
+ActiveRecord::Schema.define(version: 2023_05_03_170410) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "customers", force: :cascade do |t|
-    t.string "first_name"
-    t.string "last_name"
+    t.string "first_name", null: false
+    t.string "last_name", null: false
     t.string "address"
     t.string "phone"
-    t.date "start_date"
+    t.date "start_date", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -44,11 +44,11 @@ ActiveRecord::Schema.define(version: 2023_05_03_055227) do
   end
 
   create_table "products", force: :cascade do |t|
-    t.string "name"
-    t.string "manufacturer"
+    t.string "name", null: false
+    t.string "manufacturer", null: false
     t.string "style"
-    t.float "purchase_price"
-    t.float "sale_price"
+    t.float "purchase_price", null: false
+    t.float "sale_price", null: false
     t.integer "qty_on_hand"
     t.float "commission_percentage"
     t.datetime "created_at", precision: 6, null: false
@@ -60,7 +60,7 @@ ActiveRecord::Schema.define(version: 2023_05_03_055227) do
     t.bigint "product_id", null: false
     t.bigint "salesperson_id", null: false
     t.bigint "customer_id", null: false
-    t.date "sales_date"
+    t.date "sales_date", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["customer_id"], name: "index_sales_on_customer_id"
@@ -69,12 +69,12 @@ ActiveRecord::Schema.define(version: 2023_05_03_055227) do
   end
 
   create_table "salespeople", force: :cascade do |t|
-    t.string "first_name"
-    t.string "last_name"
+    t.string "first_name", null: false
+    t.string "last_name", null: false
     t.string "address"
-    t.string "phone"
+    t.string "phone", null: false
     t.date "start_date"
-    t.date "termination_date"
+    t.date "termination_date", null: false
     t.bigint "manager_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
