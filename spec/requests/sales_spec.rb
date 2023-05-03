@@ -2,18 +2,48 @@ require 'rails_helper'
 
 RSpec.describe 'Sales', type: :request do
     describe 'GET /index' do
-      before do
-        FactoryBot.create_list(:sale, 3)
-        get '/api/v1/sales'
-      end
+
+      context "without date filter" do 
+        before do
+            FactoryBot.create_list(:sale, 3)
+            get '/api/v1/sales'
+          end
+          
+          it 'returns all sales' do
+            expect(json.size).to eq(3)
+          end
       
-      it 'returns all sales' do
-        expect(json.size).to eq(3)
-      end
-  
-      it 'returns status code 200' do
-        expect(response).to have_http_status(:success)
-      end
+          it 'returns status code 200' do
+            expect(response).to have_http_status(:success)
+          end
+      end 
+    
+     
+      context "with date filter params" do 
+
+        let!(:sale) {FactoryBot.create(:sale, sales_date: 2.days.ago)}
+        let!(:sale2) {FactoryBot.create(:sale, sales_date: 30.days.ago)}
+        let!(:sale3) {FactoryBot.create(:sale, sales_date: Date.today)}
+
+        before do
+            get "/api/v1/sales?from_date=#{20.days.ago}&to_date=#{Date.today}"
+          end
+          
+          it 'returns filtered sales' do
+            expect(json.size).to eq(2)
+          end
+      
+          it 'returns status code 200' do
+            expect(response).to have_http_status(:success)
+          end
+
+          it 'returns sale and sale3 data only' do 
+            expect(json.first["id"]).to eq(sale.id)
+            expect(json.last["id"]).to eq(sale3.id)
+            expect(json.map{|sl| sl["id"] }).to_not eq(sale2.id)
+          end 
+      end 
+    
     end
 
     describe 'POST /create' do
