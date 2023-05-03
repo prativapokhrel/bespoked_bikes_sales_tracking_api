@@ -4,7 +4,7 @@ class Api::V1::SalesController < ApplicationController
         if params[:from_date] && params[:to_date]
             from_date = Date.parse(params[:from_date])
             to_date = Date.parse(params[:to_date])
-            @sales = Sale.where(created_at: from_date.beginning_of_day..to_date.end_of_day)
+            @sales = Sale.where(sales_date: from_date.beginning_of_day..to_date.end_of_day)
         else 
             @sales = Sale.all 
         end 
@@ -30,6 +30,6 @@ class Api::V1::SalesController < ApplicationController
 
     # whitelisting the params
     def sales_params
-        params.require(:sales).permit(:product_id, :salesperson_id, :customer_id, :sales_date) 
+        params.require(:sale).permit(:product_id, :salesperson_id, :customer_id, :sales_date) 
     end 
 end
