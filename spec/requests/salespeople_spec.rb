@@ -23,7 +23,7 @@ RSpec.describe 'Salespeople', type: :request do
         let!(:manager) {FactoryBot.create(:manager)}
         let(:valid_attributes) {{ first_name: "Ram", last_name: "Maney", address: "220 south, NY, 44503", phone: "1234567891", 
                                     start_date: Date.today, termination_date: nil, manager_id: manager.id }}
-        let(:invalid_attributes) {{phone: "3303303301", first_name: "New", last_name: "Mew"}}
+        let(:invalid_attributes) {{phone: "3303303301", first_name: person2.first_name, last_name: person2.last_name}}
 
         context "when the request is valid" do 
             before do

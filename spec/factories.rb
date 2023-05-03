@@ -25,4 +25,12 @@ FactoryBot.define do
         termination_date { Faker::Date.forward(days: 365) }
         manager_id {[Manager.first.id, Manager.last.id].sample}
     end
+
+    factory :customer do
+        first_name { Faker::Name.first_name }
+        last_name { Faker::Name.last_name }
+        phone {Faker::PhoneNumber.cell_phone}
+        address { Faker::Address.full_address }
+        start_date { Faker::Date.backward(days: 365) }
+    end
   end
