@@ -25,3 +25,34 @@ Product.destroy_all
   
 
 p "Created #{Product.count} products"
+
+
+Manager.destroy_all
+
+2.times do |index|
+    Manager.create!(
+      first_name: Faker::Name.first_name,
+      last_name: Faker::Name.last_name,
+      email: Faker::Internet.email
+    )
+  end
+  
+
+p "Created #{Manager.count} managers"
+
+
+Salesperson.destroy_all
+
+5.times do |index|
+    Salesperson.create!(
+      first_name: Faker::Name.first_name,
+      last_name: Faker::Name.last_name,
+      phone: Faker::PhoneNumber.cell_phone,
+      address: Faker::Address.full_address,
+      start_date: Faker::Date.backward(days: 365),
+      termination_date: Faker::Date.forward(days: 365),
+      manager_id: [Manager.first.id, Manager.last.id].sample
+    )
+  end
+  
+p "Created #{Salesperson.count} salespeople"
