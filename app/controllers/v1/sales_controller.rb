@@ -1,7 +1,14 @@
 class V1::SalesController < ApplicationController
 
     def index 
-        @sales = Sale.all 
+        if params[:from_date] && params[:to_date]
+            from_date = Date.parse(params[:from_date])
+            to_date = Date.parse(params[:to_date])
+            @sales = Sale.where(created_at: from_date.beginning_of_day..to_date.end_of_day)
+        else 
+            @sales = Sale.all 
+        end 
+       
         render json: @sales, status: :ok 
     end 
 
@@ -13,6 +20,10 @@ class V1::SalesController < ApplicationController
         else
             render json: @sale.errors, status: :unprocessable_entity
         end
+    end 
+
+    def filter_by_date
+        @sales = Sale.where(created_at: from_date.beginning_of_day..to_date.end_of_day)
     end 
 
     private 
