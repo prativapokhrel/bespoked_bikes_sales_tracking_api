@@ -41,4 +41,13 @@ FactoryBot.define do
         
         sales_date { Faker::Date.backward(days: 365) }
     end
+
+    factory :discount do
+        association :product
+        
+        begin_date { Faker::Date.between(from: 2.days.ago, to: Date.today) }
+        end_date { Faker::Date.between(from: 2.days.ago, to: Date.today) }
+        discount_percentage { rand(5..10) }
+
+    end
   end
