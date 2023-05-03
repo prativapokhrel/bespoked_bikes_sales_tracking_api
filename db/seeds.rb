@@ -27,7 +27,7 @@ Product.destroy_all
 p "Created #{Product.count} products"
 
 
-Manager.destroy_all
+# Manager.destroy_all
 
 2.times do |index|
     Manager.create!(
@@ -56,3 +56,18 @@ Salesperson.destroy_all
   end
   
 p "Created #{Salesperson.count} salespeople"
+
+
+Customer.destroy_all
+
+5.times do |index|
+    Customer.create!(
+      first_name: Faker::Name.first_name,
+      last_name: Faker::Name.last_name,
+      phone: Faker::PhoneNumber.cell_phone,
+      address: Faker::Address.full_address,
+      start_date: Faker::Date.backward(days: 365)
+    )
+  end
+  
+p "Created #{Customer.count} customers"

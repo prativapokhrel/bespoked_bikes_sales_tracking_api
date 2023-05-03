@@ -1,4 +1,4 @@
-class V1::SalespersonController < ApplicationController
+class V1::SalespeopleController < ApplicationController
 
     def index
         @salespeople = Salesperson.all 
@@ -18,7 +18,7 @@ class V1::SalespersonController < ApplicationController
     
       # whitelisting the params
       def person_params
-        params.require(:salesperson).permit(:first_naem, :last_name, :address, :phone, 
+        params.require(:salesperson).permit(:first_name, :last_name, :address, :phone, 
                         :start_date, :termination_date, :manager_id)
       end
 end
