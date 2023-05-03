@@ -64,7 +64,7 @@ RSpec.describe 'Products', type: :request do
             end
 
             it 'returns model error message' do
-                expect(json["name"]).to include("name already exists for this manufacturer")
+                expect(json["name"]).to include("already exists for this manufacturer")
             end
         end 
 
