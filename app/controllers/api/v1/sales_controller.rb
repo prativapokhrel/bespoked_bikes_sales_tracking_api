@@ -30,6 +30,6 @@ class Api::V1::SalesController < ApplicationController
 
     # whitelisting the params
     def sales_params
-        params.require(:sales).permit(:product_id, :salesperson_id, :customer_id, :sales_date) 
+        params.require(:sale).permit(:product_id, :salesperson_id, :customer_id, :sales_date) 
     end 
 end
