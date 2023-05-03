@@ -5,6 +5,8 @@ class V1::CustomersController < ApplicationController
     end 
 
     private 
+
+     # whitelisting the params
     def customer_params
         params.require(:customer).permit(:first_name, :last_name, :address, :phone, :start_date)
     end 

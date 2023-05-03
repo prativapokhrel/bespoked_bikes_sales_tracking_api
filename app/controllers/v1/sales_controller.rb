@@ -17,6 +17,7 @@ class V1::SalesController < ApplicationController
 
     private 
 
+    # whitelisting the params
     def sales_params
         params.require(:sales).permit(:product_id, :salesperson_id, :customer_id, :sales_date) 
     end 
