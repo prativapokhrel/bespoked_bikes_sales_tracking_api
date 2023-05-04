@@ -37,7 +37,7 @@ class Api::V1::SalespeopleController < ApplicationController
             total_sales: commission_data[salesperson].try(:first) || 0
           }
         end
-
+        
         render json: salesperson_data.sort_by {|data| data[:total_sales]}, status: :ok
       end
 
