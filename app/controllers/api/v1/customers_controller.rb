@@ -4,6 +4,20 @@ class Api::V1::CustomersController < ApplicationController
         render json: @customers, status: :ok
     end 
 
+    def show 
+        @customer = Customer.find(params[:id])
+        render json: @customer, status: :ok
+    end 
+
+    def update 
+        @customer = Customer.find(params[:id])
+        if @customer.update(customer_params)
+            render json: @customer, status: :ok
+        else 
+            render json: @customer.errors, status: :unprocessable_entity
+        end 
+    end 
+
     private 
 
      # whitelisting the params
