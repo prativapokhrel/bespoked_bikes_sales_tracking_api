@@ -1,14 +1,18 @@
 class Api::V1::CustomersController < ApplicationController
+
+    # GET /api/v1/customers
     def index 
         @customers = Customer.all 
         render json: @customers, status: :ok
     end 
 
+    # GET /api/v1/customers/:id
     def show 
         @customer = Customer.find(params[:id])
         render json: @customer, status: :ok
     end 
 
+     # PUT /api/v1/customers/:id
     def update 
         @customer = Customer.find(params[:id])
         if @customer.update(customer_params)

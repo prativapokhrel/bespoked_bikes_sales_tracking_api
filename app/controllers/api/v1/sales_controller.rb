@@ -1,7 +1,8 @@
 class Api::V1::SalesController < ApplicationController
 
+     # GET /api/v1/sales
     def index 
-        if params[:from_date] && params[:to_date]
+        if params[:from_date] && params[:to_date] #date filter 
             from_date = Date.parse(params[:from_date])
             to_date = Date.parse(params[:to_date])
             @sales = Sale.where(sales_date: from_date.beginning_of_day..to_date.end_of_day).order(sales_date: :asc)
@@ -20,6 +21,7 @@ class Api::V1::SalesController < ApplicationController
               
     end 
 
+     # GET /api/v1/sales/:id
     def show 
         @sale = Sale.find(params[:id])
         render json: @sale, status: :ok 
@@ -36,6 +38,7 @@ class Api::V1::SalesController < ApplicationController
         render json: @sales.sort_by { |data| data[:sales_date] }, status: :ok
     end 
 
+     # POST /api/v1/sales
     def create 
         @sale = Sale.new(sales_params)
 
@@ -46,6 +49,7 @@ class Api::V1::SalesController < ApplicationController
         end
     end 
 
+     # PUT /api/v1/sales/:id
     def update 
         @sale = Sale.find(params[:id])
         if @sale.update(sales_params)
@@ -53,10 +57,6 @@ class Api::V1::SalesController < ApplicationController
         else 
             render json: @sale.errors, status: :unprocessable_entity
         end 
-    end 
-
-    def filter_by_date
-        @sales = Sale.where(created_at: from_date.beginning_of_day..to_date.end_of_day)
     end 
 
     private 

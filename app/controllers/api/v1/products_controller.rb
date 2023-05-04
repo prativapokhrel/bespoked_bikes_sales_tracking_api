@@ -1,15 +1,18 @@
 class Api::V1::ProductsController < ApplicationController
 
+   # GET /api/v1/products/:id
   def index
     @products = Product.all 
     render json: @products, status: :ok 
   end 
 
+ # GET /api/v1/products/:id
   def show
     @product = Product.find(params[:id]) 
     render json: @product, status: :ok 
   end 
 
+   # PUT /api/v1/products/:id
   def update
     @product = Product.find(params[:id])
     if @product.update(product_params)
