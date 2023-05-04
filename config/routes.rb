@@ -7,6 +7,8 @@ Rails.application.routes.draw do
       resources :customers, only: [:index, :show, :update]
       resources :sales, only: [:index, :create, :show, :update]
       resources :managers, only: [:index, :show, :update]
+      resources :discounts, only: [:index, :show, :update]
+
       get 'salespeople/quarterly_commission_report' => 'salespeople#quarterly_commission_report'
     end 
   end 
