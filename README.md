@@ -45,9 +45,10 @@ rails db:create db:migrate db:seed
 ```
 
 ##### 4. Start the Rails server
+To run with the client, which is a reactjs app [https://github.com/prativapokhrel/bespoked_bikes_sales_tracking_client] , use port 3000 
 
 ```ruby
-bundle exec rails s
+bundle exec rails s -p 3000
 ```
 
 ### Tests
