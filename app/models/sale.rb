@@ -5,6 +5,7 @@ class Sale < ApplicationRecord
 
   validates_presence_of :sales_date
 
+  #returns commission of sales persoon
   def salesperson_commission
     sale_price = product.sale_price
             
@@ -15,6 +16,7 @@ class Sale < ApplicationRecord
 
   end 
 
+  #returns the salesprice after applying discount
   def discounted_price
 
     discounts = product.discounts.where("begin_date <= ? AND end_date >= ?", sales_date.beginning_of_day, sales_date.end_of_day)
