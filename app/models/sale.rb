@@ -11,7 +11,7 @@ class Sale < ApplicationRecord
     commission_percentage = product.commission_percentage
 
     commission = discounted_price * commission_percentage / 100
-    commission
+    commission.round(2)
 
   end 
 
@@ -23,6 +23,6 @@ class Sale < ApplicationRecord
     discounts && discounts.each do |discount|
       discounted_price -= discounted_price * (discount.discount_percentage / 100)
     end 
-    discounted_price
+    discounted_price.round(2)
   end
 end

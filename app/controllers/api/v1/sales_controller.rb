@@ -8,7 +8,16 @@ class Api::V1::SalesController < ApplicationController
         else 
             @sales = Sale.all.order(sales_date: :asc)
         end 
-        render json: @sales.as_json(methods: [:salesperson_commission, :discounted_price]),  status: :ok 
+
+            render json: @sales.as_json(
+                methods: [:salesperson_commission, :discounted_price],
+                include: {
+                  product: {only: [:id, :name]},
+                  salesperson: {only: [:first_name, :last_name]},
+                  customer: {only: [:first_name, :last_name]}
+                }
+              ), status: :ok
+              
     end 
 
     def show 

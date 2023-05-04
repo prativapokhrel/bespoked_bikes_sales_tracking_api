@@ -93,7 +93,7 @@ RSpec.describe 'Salespeople', type: :request do
 
 
         before do
-          get '/api/v1/salespeople/quarterly_commission_report?quarter=Q2&year=2023'
+          get '/api/v1/quarterly_commission_report?quarter=Q2&year=2023'
         end
         
         it 'returns all salespeople record' do
