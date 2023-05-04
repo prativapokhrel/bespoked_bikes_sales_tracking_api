@@ -1,14 +1,18 @@
 class Api::V1::DiscountsController < ApplicationController
+
+     # GET /api/v1/discounts
     def index 
         @discounts = Discount.all 
         render json: @discounts, status: :ok
     end 
 
+     # GET /api/v1/discounts/:id
     def show 
         @discount = Discount.find(params[:id])
         render json: @discount, status: :ok
     end 
 
+     # PUT /api/v1/discounts/:id
     def update 
         @discount = Discount.find(params[:id])
         if @discount.update(discount_params)
@@ -19,6 +23,7 @@ class Api::V1::DiscountsController < ApplicationController
     end 
 
     private 
+    
      # whitelisting the params
     def discount_params
         params.require(:discount).permit(:product_id, :begin_date, :end_date, :discount_percentage)
