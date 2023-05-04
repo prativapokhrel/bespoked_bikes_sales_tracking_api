@@ -66,4 +66,58 @@ RSpec.describe 'Salespeople', type: :request do
         end 
 
     end
+
+    describe 'GET /quarterly_commission_report' do
+
+        let!(:person) { FactoryBot.create(:salesperson, first_name: "Mia", last_name: "Dia") }
+        let!(:customer) { FactoryBot.create(:customer)}
+        let!(:product) { FactoryBot.create(:product, commission_percentage: 10, sale_price: 1000)}
+        let!(:discount) { FactoryBot.create(:discount, product_id: product.id, begin_date: 10.days.ago, 
+                                            end_date: 10.days.from_now, discount_percentage: 10) }
+        let!(:sale) { FactoryBot.create(:sale, salesperson_id: person.id, customer_id: customer.id, product_id: product.id, 
+                                        sales_date: 5.days.ago) }
+        
+        let!(:person2) { FactoryBot.create(:salesperson, first_name: "Ram", last_name: "Sham") }
+        let!(:product2) { FactoryBot.create(:product, commission_percentage: 2.5, sale_price: 1300)}
+
+        let!(:discount2) { FactoryBot.create(:discount, product_id: product2.id, begin_date: 13.days.ago, 
+                                            end_date: 10.days.from_now, discount_percentage: 5) }
+        let!(:discount3) { FactoryBot.create(:discount, product_id: product2.id, begin_date: 20.days.ago, 
+                                            end_date: 2.days.from_now, discount_percentage: 6) }
+        let!(:discount4) { FactoryBot.create(:discount, product_id: product2.id, begin_date: 100.days.ago, 
+                                            end_date: 20.days.ago, discount_percentage: 7) }
+        let!(:sale2) { FactoryBot.create(:sale, salesperson_id: person2.id, customer_id: customer.id, product_id: product2.id, 
+                                        sales_date: 12.days.ago) }
+        let!(:sale3) { FactoryBot.create(:sale, salesperson_id: person2.id, customer_id: customer.id, product_id: product2.id, 
+                                        sales_date: 2.months.ago) }
+
+
+        before do
+          get '/api/v1/salespeople/quarterly_commission_report?quarter=Q2&year=2023'
+        end
+        
+        it 'returns all salespeople record' do
+          expect(json.size).to eq(2)
+        end
+    
+        it 'returns status code 200' do
+          expect(response).to have_http_status(:success)
+        end
+
+        it 'returns correct data' do 
+            sp1= json.first 
+            sp2 = json.last 
+
+            expect(sp1["name"]).to eq("#{person.first_name} #{person.last_name}")
+            expect(sp1["quarterly_commission"]).to eq(90) # 10% of (1000 - 10% of 1000) 
+            expect(sp1["total_sales"]).to eq(900) # 1000 - 10% of 1000
+
+            expect(sp2["name"]).to eq("#{person2.first_name} #{person2.last_name}")
+            # first_discounted_price = (1300 - 5% of 1300) = 1235
+            # second_discounted_price =  first_discounted_price - 6% of first_discounted_price = 1160.9
+            #commission = 2.5% of second_discounted_price = 29.0225
+            expect(sp2["quarterly_commission"]).to eq(29.02)
+            expect(sp2["total_sales"]).to eq(1160.9) 
+        end 
+      end
   end
