@@ -20,14 +20,13 @@ class Api::V1::SalespeopleController < ApplicationController
         end
       end
 
-      # GET /salesperson/quarterly_commission_report?quarter=Q2&year=2023
+      # GET /quarterly_commission_report?quarter=Q2&year=2023
       def quarterly_commission_report
         quarter = params[:quarter] # Q1, Q2, Q3, Q4
         year = params[:year].to_i
 
         start_date, end_date = get_quarter_dates(quarter, year)
         sales = Sale.where(sales_date: start_date..end_date)
-        binding.pry 
 
         commission_data = get_commission_data(sales)
 
@@ -39,7 +38,7 @@ class Api::V1::SalespeopleController < ApplicationController
           }
         end
 
-        render json: salesperson_data, status: :ok
+        render json: salesperson_data.sort_by {|data| data[:total_sales]}, status: :ok
       end
 
 
@@ -56,7 +55,6 @@ class Api::V1::SalespeopleController < ApplicationController
             discounted_price = apply_discount(sale_price, sale.sales_date, sale.product.discounts)
             
             commission_percentage = sale.product.commission_percentage
-            binding.pry 
 
             commission += (discounted_price * commission_percentage / 100)
 
@@ -77,8 +75,6 @@ class Api::V1::SalespeopleController < ApplicationController
 
         discounts && discounts.each do |discount|
           discounted_price -= discounted_price * (discount.discount_percentage / 100)
-        binding.pry 
-
         end 
         discounted_price
       end
