@@ -12,6 +12,11 @@ class Api::V1::SalesController < ApplicationController
         render json: @sales, status: :ok 
     end 
 
+    def show 
+        @sale = Sale.find(params[:id])
+        render json: @sale, status: :ok 
+    end 
+
     def create 
         @sale = Sale.new(sales_params)
 
@@ -20,6 +25,15 @@ class Api::V1::SalesController < ApplicationController
         else
             render json: @sale.errors, status: :unprocessable_entity
         end
+    end 
+
+    def update 
+        @sale = Sale.find(params[:id])
+        if @sale.update(sales_params)
+            render json: @sale, status: :ok
+        else 
+            render json: @sale.errors, status: :unprocessable_entity
+        end 
     end 
 
     def filter_by_date

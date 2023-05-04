@@ -6,4 +6,8 @@ class Product < ApplicationRecord
                             message: "already exists for this manufacturer"
     
     validates_presence_of :name, :manufacturer, :purchase_price, :sale_price
+
+   
+    
+    
 end
