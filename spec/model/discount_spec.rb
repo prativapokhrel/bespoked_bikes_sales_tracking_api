@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Discount, type: :model do
@@ -14,12 +16,12 @@ RSpec.describe Discount, type: :model do
     end
   end
 
-  context 'associations' do 
-    let!(:product) {FactoryBot.create(:product)}
+  context 'associations' do
+    let!(:product) { FactoryBot.create(:product) }
     let!(:discount) { FactoryBot.create(:discount, product_id: product.id) }
 
     it 'associates discount with product' do
-        expect(product.reload.discounts).to eq([discount]) 
-      end
-  end 
+      expect(product.reload.discounts).to eq([discount])
+    end
+  end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Manager < ApplicationRecord
-    has_many :salespeople
+  has_many :salespeople
 end

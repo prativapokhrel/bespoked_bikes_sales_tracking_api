@@ -1,16 +1,18 @@
-class Api::V1::SalespeopleController < ApplicationController
+# frozen_string_literal: true
 
-    def index
-        @salespeople = Salesperson.all 
-        # response.headers['X-Total-Count'] = @salespeople.count 
-        render json: @salespeople, status: :ok 
-      end 
+module Api
+  module V1
+    class SalespeopleController < ApplicationController
+      def index
+        @salespeople = Salesperson.all
+        render json: @salespeople, status: :ok
+      end
 
-      def show 
+      def show
         @salesperson = Salesperson.find(params[:id])
-        render json: @salesperson, status: :ok 
-      end 
-    
+        render json: @salesperson, status: :ok
+      end
+
       def update
         @salesperson = Salesperson.find(params[:id])
         if @salesperson.update(person_params)
@@ -37,12 +39,11 @@ class Api::V1::SalespeopleController < ApplicationController
             total_sales: commission_data[salesperson].try(:first) || 0
           }
         end
-        
-        render json: salesperson_data.sort_by {|data| data[:total_sales]}, status: :ok
+
+        render json: salesperson_data.sort_by { |data| data[:total_sales] }, status: :ok
       end
 
-
-      private 
+      private
 
       def get_commission_data(sales)
         commission_data = sales.group_by(&:salesperson).transform_values do |sales|
@@ -51,31 +52,28 @@ class Api::V1::SalespeopleController < ApplicationController
 
           sales.sum do |sale|
             sale_price = sale.product.sale_price
-            
+
             discounted_price = apply_discount(sale_price, sale.sales_date, sale.product.discounts)
-            
+
             commission_percentage = sale.product.commission_percentage
 
             commission += (discounted_price * commission_percentage / 100)
 
-            total_sales += discounted_price 
-
+            total_sales += discounted_price
           end
           [total_sales, commission.round(2)]
-
         end
-      end 
+      end
 
-
-      #helper method to find discounted price 
+      # helper method to find discounted price
       def apply_discount(sale_price, sale_date, product_discounts)
+        discounts = product_discounts.where('begin_date <= ? AND end_date >= ?', sale_date.beginning_of_day,
+                                            sale_date.end_of_day)
+        discounted_price = sale_price
 
-        discounts = product_discounts.where("begin_date <= ? AND end_date >= ?", sale_date.beginning_of_day, sale_date.end_of_day)
-        discounted_price = sale_price 
-
-        discounts && discounts.each do |discount|
+        discounts&.each do |discount|
           discounted_price -= discounted_price * (discount.discount_percentage / 100)
-        end 
+        end
         discounted_price
       end
 
@@ -94,11 +92,12 @@ class Api::V1::SalespeopleController < ApplicationController
           raise ArgumentError, "Invalid quarter: #{quarter}"
         end
       end
-    
-    
+
       # whitelisting the params
       def person_params
-        params.require(:salesperson).permit(:first_name, :last_name, :address, :phone, 
-                        :start_date, :termination_date, :manager_id)
+        params.require(:salesperson).permit(:first_name, :last_name, :address, :phone,
+                                            :start_date, :termination_date, :manager_id)
       end
+    end
+  end
 end

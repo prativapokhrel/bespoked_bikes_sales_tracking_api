@@ -1,30 +1,35 @@
-class Api::V1::ManagersController < ApplicationController
+# frozen_string_literal: true
 
-     # GET /api/v1/managers
-    def index 
-        @managers = Manager.all 
+module Api
+  module V1
+    class ManagersController < ApplicationController
+      # GET /api/v1/managers
+      def index
+        @managers = Manager.all
         render json: @managers, status: :ok
-    end 
+      end
 
-     # GET /api/v1/managers/:id
-    def show 
+      # GET /api/v1/managers/:id
+      def show
         @manager = Manager.find(params[:id])
         render json: @manager, status: :ok
-    end 
+      end
 
-     # PUT /api/v1/managers/:id
-    def update 
+      # PUT /api/v1/managers/:id
+      def update
         @manager = Manager.find(params[:id])
         if @manager.update(manager_params)
-            render json: @manager
-          else
-            render json: @manager.errors, status: :unprocessable_entity
-          end
-    end 
+          render json: @manager
+        else
+          render json: @manager.errors, status: :unprocessable_entity
+        end
+      end
 
-    private 
+      private
 
-    def manager_params
+      def manager_params
         params.require(:manager).permit(:email, :first_name, :last_name)
-    end 
+      end
+    end
+  end
 end

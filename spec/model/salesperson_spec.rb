@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Salesperson, type: :model do
@@ -9,28 +11,28 @@ RSpec.describe Salesperson, type: :model do
     end
 
     it 'is not valid without a first name' do
-        person.first_name = nil
-        expect(person).to_not be_valid
+      person.first_name = nil
+      expect(person).to_not be_valid
     end
 
     it 'is not valid without a last name' do
-        person.last_name = nil
-        expect(person).to_not be_valid
+      person.last_name = nil
+      expect(person).to_not be_valid
     end
 
     it 'is not valid without a phone' do
-        person.phone = nil
-        expect(person).to_not be_valid
+      person.phone = nil
+      expect(person).to_not be_valid
     end
 
     it 'is not valid without a start date' do
-        person.start_date = nil
-        expect(person).to_not be_valid
+      person.start_date = nil
+      expect(person).to_not be_valid
     end
 
     it 'is not valid without a manager' do
-        person.manager = nil
-        expect(person).to_not be_valid
+      person.manager = nil
+      expect(person).to_not be_valid
     end
 
     it 'is not valid with a duplicate phone' do
@@ -40,7 +42,7 @@ RSpec.describe Salesperson, type: :model do
       person.last_name = existing_person.last_name
 
       expect(person).to_not be_valid
-      expect(person.errors.full_messages).to include("Phone has already been taken")
+      expect(person.errors.full_messages).to include('Phone has already been taken')
     end
   end
 end
