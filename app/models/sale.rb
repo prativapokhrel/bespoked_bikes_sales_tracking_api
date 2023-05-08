@@ -1,18 +1,21 @@
 # frozen_string_literal: true
 
 class Sale < ApplicationRecord
+
+  #associations
   belongs_to :product
   belongs_to :salesperson
   belongs_to :customer
 
+  #validations
   validates_presence_of :sales_date
+
+  #scopes
+  default_scope { order(created_at: :desc) }
 
   # returns commission of sales persoon
   def salesperson_commission
-    sale_price = product.sale_price
-
     commission_percentage = product.commission_percentage
-
     commission = discounted_price * commission_percentage / 100
     commission.round(2)
   end

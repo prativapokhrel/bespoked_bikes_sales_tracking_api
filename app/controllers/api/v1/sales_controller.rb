@@ -3,41 +3,17 @@
 module Api
   module V1
     class SalesController < ApplicationController
+
       # GET /api/v1/sales
       def index
-        if params[:from_date] && params[:to_date] # date filter
-          from_date = Date.parse(params[:from_date])
-          to_date = Date.parse(params[:to_date])
-          @sales = Sale.where(sales_date: from_date.beginning_of_day..to_date.end_of_day).order(sales_date: :asc)
-        else
-          @sales = Sale.all.order(sales_date: :asc)
-        end
-
-        render json: @sales.as_json(
-          methods: %i[salesperson_commission discounted_price],
-          include: {
-            product: { only: %i[id name] },
-            salesperson: { only: %i[first_name last_name] },
-            customer: { only: %i[first_name last_name] }
-          }
-        ), status: :ok
+        sales_service = SalesService.new(params)
+        render json: sales_service.as_json, status: :ok
       end
 
       # GET /api/v1/sales/:id
       def show
         @sale = Sale.find(params[:id])
         render json: @sale, status: :ok
-      end
-
-      def chart
-        @sales = []
-        Sale.all.each do |sale|
-          @sales << { sale_price: sale.discounted_price,
-                      salesperson: "#{sale.salesperson.first_name} #{sale.salesperson.last_name}",
-                      sales_date: sale.sales_date }
-        end
-
-        render json: @sales.sort_by { |data| data[:sales_date] }, status: :ok
       end
 
       # POST /api/v1/sales
@@ -62,7 +38,6 @@ module Api
       end
 
       private
-
       # whitelisting the params
       def sales_params
         params.require(:sale).permit(:product_id, :salesperson_id, :customer_id, :sales_date)

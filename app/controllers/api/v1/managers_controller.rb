@@ -26,7 +26,6 @@ module Api
       end
 
       private
-
       def manager_params
         params.require(:manager).permit(:email, :first_name, :last_name)
       end
