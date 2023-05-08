@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Sale, type: :model do
@@ -9,23 +11,23 @@ RSpec.describe Sale, type: :model do
     end
 
     it 'is not valid without a customer_id' do
-        sale.customer_id = nil
-        expect(sale).to_not be_valid
+      sale.customer_id = nil
+      expect(sale).to_not be_valid
     end
 
     it 'is not valid without a salesperson_id' do
-        sale.salesperson_id = nil
-        expect(sale).to_not be_valid
+      sale.salesperson_id = nil
+      expect(sale).to_not be_valid
     end
 
     it 'is not valid without a product_id' do
-        sale.product_id = nil
-        expect(sale).to_not be_valid
+      sale.product_id = nil
+      expect(sale).to_not be_valid
     end
 
     it 'is not valid without a start date' do
-        sale.sales_date = nil
-        expect(sale).to_not be_valid
+      sale.sales_date = nil
+      expect(sale).to_not be_valid
     end
   end
 end
